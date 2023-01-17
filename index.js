@@ -7,7 +7,22 @@ express()
   .use(express.static(path.join(__dirname, "public")))
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
-  .get("/", (req, res) => res.render("pages/index"))
+  .get("/", (req, res) => {
+    // if variables are sent, render the page with the variables
+    if (req.query.word && req.query.lang) {
+      res.render("pages/index", {
+        word: req.query.word,
+        lang: req.query.lang,
+      });
+
+      // otherwise, render the page without variables
+    } else {
+      res.render("pages/index", {
+        word: "",
+        lang: "",
+      });
+    }
+  })
   .post("/api/word", (req, res) => {
     if (!req.body || !req.body.word || !req.body.lang) {
       handleError("Missing word or lang");
@@ -53,6 +68,22 @@ express()
       .then((res) => res.text())
       .then(handleSuccess)
       .catch(handleError);
+  })
+  .get("/api/word/page", (req, res) => {
+    // /api/word/page?word=word&lang=lang
+    if (!req.query || !req.query.word || !req.query.lang) {
+      handleError("Missing word or lang");
+      return;
+    }
+
+    function handleError(err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+
+    // otherwise, redirect to "/" and send a variable to the page
+    res.redirect("/?word=" + req.query.word + "&lang=" + req.query.lang);
   })
   .get("*", (req, res) => {
     res.redirect("https://www.wordreference.com/definition/" + req.path);

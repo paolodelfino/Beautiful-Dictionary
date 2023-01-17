@@ -1,0 +1,6 @@
+{
+    "ext": "ejs, css, scss, js",
+    "events": {
+        "restart": "npm run build"
+    }
+}

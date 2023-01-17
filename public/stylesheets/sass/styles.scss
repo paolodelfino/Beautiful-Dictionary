@@ -1,0 +1,21 @@
+/*
+    If you want to use sass files, compile them to css with the following command:
+    sass --watch public\stylesheets\sass\styles.scss:public\stylesheets\sass\styles.css
+    * You can also automize this process at the run of the server adding your script to the package.json file:
+    "scripts": {
+        ...
+        "sass": "sass --watch public\stylesheets\sass\styles.scss:public\stylesheets\sass\styles.css"
+    }
+    and then add the command "npm run sass" to the "start" or "dev" or both script:
+    "scripts": {
+        ...
+        "start": "npm run sass && ...",
+        "dev": "npm run sass && ..."
+    }
+
+    and then include the css file in the head of your html file:
+    <link rel="stylesheet" href="/stylesheets/sass/styles.css">
+
+    but first you need to install sass with the following command:
+    npm install -g sass
+*/
